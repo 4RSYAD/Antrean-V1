@@ -1,0 +1,99 @@
+export type QueueStatus = 'waiting' | 'washing' | 'waiting_payment' | 'done' | 'cancelled';
+
+export type VehicleType = 'kecil' | 'besar' | 'mobil';
+export type MotorType = VehicleType;
+
+export interface QueueItem {
+  id: string;
+  nomor_antrian: string;
+  nama_pemohon: string;
+  tipe_motor: VehicleType;
+  layanan_id: string;
+  total_biaya: number;
+  status: QueueStatus;
+  pit_id: string | null;
+  created_at: string;
+  washed_at?: string;
+  completed_at?: string;
+  notes?: string;
+  // Payment tracking
+  is_paid: boolean;
+  paid_at?: string;
+  cashier_name?: string;
+}
+
+export interface ServiceItem {
+  id: string;
+  nama_layanan: string;
+  deskripsi: string;
+  harga_kecil: number;
+  harga_besar: number;
+  harga_mobil?: number;
+  harga?: number; // legacy fallback
+  durasi_menit: number;
+  icon?: string;
+  badge?: string;
+}
+
+export type PitType = 'hydraulic' | 'foam' | 'drying' | 'detailing' | 'standard';
+
+export interface PitItem {
+  id: string;
+  nama_pit: string;
+  tipe_pit?: PitType;
+  status: 'tersedia' | 'sibuk' | 'maintenance';
+  keterangan?: string;
+}
+
+export interface StoreSettings {
+  nama_usaha: string;
+  tagline: string;
+  alamat: string;
+  telepon: string;
+  footer_struk: string;
+  auto_voice: boolean;
+}
+
+export type UserRole = 'admin' | 'pelanggan';
+
+export interface AuthUser {
+  id: string;
+  email: string;
+  name: string;
+  role: 'admin' | 'kasir';
+  is_logged_in: boolean;
+  logged_at?: string;
+}
+
+export interface SupabaseConfig {
+  url: string;
+  anonKey: string;
+  isConnected: boolean;
+  isRealtimeActive: boolean;
+  lastSync?: string;
+}
+
+export type AdminView =
+  | 'dashboard'
+  | 'queues'
+  | 'pit'
+  | 'pit_manage'
+  | 'services'
+  | 'reports'
+  | 'settings'
+  | 'tv';
+
+export type CustomerView = 'check' | 'register' | 'tv';
+
+export interface ToastNotification {
+  id: string;
+  msg: string;
+  type: 'success' | 'warning' | 'info' | 'error';
+}
+
+export interface ConfirmModalData {
+  isOpen: boolean;
+  title: string;
+  message: string;
+  action: (() => void) | null;
+}
